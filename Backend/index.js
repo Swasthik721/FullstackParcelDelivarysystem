@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth")
+const userRoute = rquire("./routes/user")
+const PARCELRoute = rquire("./routes/parcel")
 
 const app = express();
 app.use(cors());
@@ -10,6 +12,8 @@ app.use(express.json());
 
 //ROUTES
 app.use("/auth", authRoute)
+app.use("/users", userRoute)
+app.use("/parcels", parcelRoute)
 
 // Debugging: Check if DB is loaded
 console.log("DB URI:", process.env.DB);
