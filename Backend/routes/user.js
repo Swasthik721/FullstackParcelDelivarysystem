@@ -1,12 +1,8 @@
+// routes/user.js
 const express = require("express");
-const router = express.Router()
+const router = express.Router();
+const { deleteUser } = require("../controllers/userController"); // ಇಲ್ಲಿ Import ಮಾಡಿ
 
-//DELETING USER
-
-router.delete("/:id",deleteUser)
-
-//GETIALL USERS
-
-Router.GET("/",getAllUsers)
+router.delete("/:id", deleteUser); // deleteUser ಈಗ ಲಭ್ಯವಿದೆ
 
 module.exports = router;
