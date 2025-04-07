@@ -1,28 +1,25 @@
-require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const authRoute = require("./routes/auth")
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 
+dotenv.config();
 const app = express();
-app.use(cors());
+
+// Database connection
+mongoose.connect(process.env.DB_URI)
+  .then(() => console.log("DB Connected!"))
+  .catch((err) => console.log(err));
+
+// Middleware
 app.use(express.json());
 
-//ROUTES
-app.use("/auth", authRoute)
+// Routes
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
-// Debugging: Check if DB is loaded
-console.log("DB URI:", process.env.DB);
-
-const DB = process.env.DB;
-if (!DB) {
-  throw new Error("Database connection string is missing in .env file");
-}
-
-mongoose
-  .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("DB connection successful"))
-  .catch((err) => console.log("DB Connection Error:", err));
-
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+// Start server
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server running on port 3000");
+});
